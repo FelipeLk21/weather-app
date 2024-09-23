@@ -1,25 +1,25 @@
 import { useState } from 'react';
-import './App.css';
+import './App.css'; // Arquivo CSS para customização de estilos
 
 function App() {
   const [city, setCity] = useState("Belo Horizonte");
   const [weatherForecast, setWeatherForecast] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);  
-  const [error, setError] = useState(null);  
+  const [isLoading, setIsLoading] = useState(false);  // Estado de loading
+  const [error, setError] = useState(null);  // Estado para erros
 
   const handleChange = (e) => {
     setCity(e.target.value);
   }
 
   const handleSearch = () => {
-    setIsLoading(true);  
-    setError(null); 
+    setIsLoading(true);  // Inicia o loading
+    setError(null);  // Reseta o erro
 
-   
+    // Acesse as variáveis de ambiente para a URL da API e a chave
     const apiKey = process.env.NEXT_PUBLIC_API_KEY; // Variável de ambiente para a chave da API
     const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Variável de ambiente para a URL da API
 
-    fetch(`${apiUrl}/v1/current.json?key=${apiKey}&q=${city}&lang=pt`)
+    fetch(`http://api.weatherapi.com/v1/current.json?key=6e55e718cef64d068e8201446241408&q=${city}&lang=pt`)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
