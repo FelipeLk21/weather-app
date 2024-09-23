@@ -1,0 +1,37 @@
+
+body {
+    background-color: #e0f7fa;
+  }
+  
+
+  .jumbotron {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .weather-result {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .weather-result h3 {
+    color: #007bff;
+  }
+  
+  .weather-result img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  input.form-control-lg {
+    font-size: 1.25rem;
+  }
+  
+  button.btn-lg {
+    font-size: 1.25rem;
+    padding: 0.5rem 1.5rem;
+  }
+  
