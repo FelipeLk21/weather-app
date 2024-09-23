@@ -1,20 +1,25 @@
 import { useState } from 'react';
-import './App.css'; // Arquivo CSS para customização de estilos
+import './App.css';
 
 function App() {
   const [city, setCity] = useState("Belo Horizonte");
   const [weatherForecast, setWeatherForecast] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);  // Estado de loading
-  const [error, setError] = useState(null);  // Estado para erros
+  const [isLoading, setIsLoading] = useState(false);  
+  const [error, setError] = useState(null);  
 
   const handleChange = (e) => {
     setCity(e.target.value);
   }
 
   const handleSearch = () => {
-    setIsLoading(true);  // Inicia o loading
-    setError(null);  // Reseta o erro
-    fetch(`http://api.weatherapi.com/v1/current.json?key=6e55e718cef64d068e8201446241408&q=${city}&lang=pt`)
+    setIsLoading(true);  
+    setError(null); 
+
+   
+    const apiKey = process.env.NEXT_PUBLIC_API_KEY; // Variável de ambiente para a chave da API
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Variável de ambiente para a URL da API
+
+    fetch(`${apiUrl}/v1/current.json?key=${apiKey}&q=${city}&lang=pt`)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -24,12 +29,12 @@ function App() {
       })
       .then((data) => {
         setWeatherForecast(data);
-        setIsLoading(false);  // Finaliza o loading
+        setIsLoading(false);  
       })
       .catch((error) => {
         console.error('Erro na requisição:', error);
-        setError(error.message);  // Define o erro
-        setIsLoading(false);  // Finaliza o loading em caso de erro
+        setError(error.message);  
+        setIsLoading(false);  
       });
   }
 
@@ -55,13 +60,13 @@ function App() {
               className="form-control form-control-lg"
               placeholder="Digite sua cidade"
               value={city}
-              disabled={isLoading}  // Desabilitar input durante o loading
+              disabled={isLoading} 
             />
             <div className="input-group-append">
               <button
                 onClick={handleSearch}
                 className="btn btn-primary btn-lg"
-                disabled={isLoading}  // Desabilitar botão durante o loading
+                disabled={isLoading}  
               >
                 {isLoading ? 'Pesquisando...' : 'Pesquisar'}  {/* Mostra 'Pesquisando...' quando estiver carregando */}
               </button>
