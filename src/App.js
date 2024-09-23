@@ -6,6 +6,10 @@ function App() {
   const [weatherForecast, setWeatherForecast] = useState(null);
   const [isLoading, setIsLoading] = useState(false);  // Estado de loading
   const [error, setError] = useState(null);  // Estado para erros
+    
+    const apiKey = process.env.NEXT_PUBLIC_API_KEY; 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    
 
   const handleChange = (e) => {
     setCity(e.target.value);
@@ -14,12 +18,7 @@ function App() {
   const handleSearch = () => {
     setIsLoading(true);  // Inicia o loading
     setError(null);  // Reseta o erro
-
-    // Acesse as variáveis de ambiente para a URL da API e a chave
-    const apiKey = process.env.NEXT_PUBLIC_API_KEY; // Variável de ambiente para a chave da API
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Variável de ambiente para a URL da API
-
-    fetch(`http://api.weatherapi.com/v1/current.json?key=6e55e718cef64d068e8201446241408&q=${city}&lang=pt`)
+    fetch(`https://api.weatherapi.com/v1/current.json?key=6e55e718cef64d068e8201446241408&q=${city}&lang=pt`)
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -29,12 +28,12 @@ function App() {
       })
       .then((data) => {
         setWeatherForecast(data);
-        setIsLoading(false);  
+        setIsLoading(false);  // Finaliza o loading
       })
       .catch((error) => {
         console.error('Erro na requisição:', error);
-        setError(error.message);  
-        setIsLoading(false);  
+        setError(error.message);  // Define o erro
+        setIsLoading(false);  // Finaliza o loading em caso de erro
       });
   }
 
@@ -60,13 +59,13 @@ function App() {
               className="form-control form-control-lg"
               placeholder="Digite sua cidade"
               value={city}
-              disabled={isLoading} 
+              disabled={isLoading}  // Desabilitar input durante o loading
             />
             <div className="input-group-append">
               <button
                 onClick={handleSearch}
                 className="btn btn-primary btn-lg"
-                disabled={isLoading}  
+                disabled={isLoading}  // Desabilitar botão durante o loading
               >
                 {isLoading ? 'Pesquisando...' : 'Pesquisar'}  {/* Mostra 'Pesquisando...' quando estiver carregando */}
               </button>
